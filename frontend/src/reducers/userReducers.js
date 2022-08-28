@@ -4,6 +4,10 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGOUT,
+  PASSWORD_RESET_CONFIRM_SUCCESS,
+  PASSWORD_RESET_CONFIRM_FAIL,
+  PASSWORD_RESET_SUCCESS,
+  PASSWORD_RESET_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAIL,
@@ -55,6 +59,36 @@ export const userLoginReducer = (state = {}, action) => {
       return state;
   }
 };
+
+
+export const userForgetPassword = (state = {}, action) =>{
+  switch (action.type) {
+    
+    case PASSWORD_RESET_CONFIRM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case PASSWORD_RESET_CONFIRM_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case PASSWORD_RESET_SUCCESS:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case PASSWORD_RESET_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+  
+    default:
+      return state;
+  }}
+
 
 /* REDUCER USED IN USER REGISTRATION IN RegisterScreen COMPONENT */
 export const userRegisterReducer = (state = {}, action) => {

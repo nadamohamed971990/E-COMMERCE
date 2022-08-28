@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from .models import *
-
+# from rest_auth.serializers import ChangePasswordSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     name= serializers.SerializerMethodField(read_only=True)
@@ -41,6 +41,15 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
+
+
+
+class AddImgSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AddImg
+        fields = '__all__'
+
+
 
 class ProductSerializer(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField(read_only= True)
@@ -89,6 +98,45 @@ class OrderSerializer(serializers.ModelSerializer):
         serializer = UserSerializer(items,many=False)
         return serializer.data
 
+    
 
+
+# class CustomPasswordResetSerializer(PasswordResetSerializer):
+#     email = serializers.EmailField()
+#     password_reset_form_class = ResetPasswordForm
+
+#     def validate_email(self, value):
+#         # Create PasswordResetForm with the serializer
+#         self.reset_form = self.password_reset_form_class(data=self.initial_data)
+#         if not self.reset_form.is_valid():
+#             raise serializers.ValidationError(self.reset_form.errors)
+
+#         ###### FILTER YOUR USER MODEL ######
+#         if not get_user_model().objects.filter(email=value).exists():
+#             raise serializers.ValidationError(_('Invalid e-mail address'))
+
+#         return value
+
+#     def save(self):
+#         request = self.context.get('request')
+#         # Set some values to trigger the send_email method.
+#         opts = {
+#             'use_https': request.is_secure(),
+#             'from_email': getattr(settings, 'DEFAULT_FROM_EMAIL'),
+#             'request': request,
+#         }
+#         opts.update(self.get_email_options())
+#         self.reset_form.save(**opts)
+
+
+
+
+# class ChangePasswordSerializer(serializers.Serializer):
+#     old_password = serializers.CharField(required=True)
+#     new_password = serializers.CharField(required=True)
+    
+#     class Meta:
+#         model = User
+#         fields = '__all__'
 
 

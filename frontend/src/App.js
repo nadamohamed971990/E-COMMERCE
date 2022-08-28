@@ -19,9 +19,11 @@ import UserEditScreen from "./screens/UserEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
+import ForgetPassword from "./screens/ForgetPassword";
 
 /* REACT ROUTER */
 import { HashRouter as Router, Route } from "react-router-dom";
+import ForgetPasswordConfirm from "./screens/ForgetPasswordConfirm";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
           <Route path="/login" component={LoginScreen} />
 
           <Route path="/register" component={RegisterScreen} />
+          <Route path="/forgetPassword" component={ForgetPassword} />
+          <Route path="/forgetPasswordConfirm" component={ForgetPasswordConfirm} />
 
           <Route path="/profile" component={ProfileScreen} />
 

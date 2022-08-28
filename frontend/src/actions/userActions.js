@@ -7,6 +7,10 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGOUT,
+  PASSWORD_RESET_CONFIRM_SUCCESS,
+  PASSWORD_RESET_CONFIRM_FAIL,
+  PASSWORD_RESET_SUCCESS,
+  PASSWORD_RESET_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAIL,
@@ -70,6 +74,66 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+export const reset_password = (email, user) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+    // const { data } = await axios.get(`/api/users/${id}/`, config);
+    const { data } = await axios.post(
+      `/api/users/password_reset/${user._id}/`,
+      { username: email },
+      config
+    );
+    dispatch({
+      type: PASSWORD_RESET_SUCCESS,
+      payload: data,
+    });
+    // eslint-disable-next-line no-sequences
+    localStorage.setItem = ("userInfo", JSON.stringify({ email }));
+  } catch (error) {
+    dispatch({
+      type: PASSWORD_RESET_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+export const reset_password_confirm =
+  (uid, token, new_password, re_new_password) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({ uid, token, new_password, re_new_password });
+    try {
+      // await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password_confirm/`, body, config);
+      const { data } = await axios.post(
+        "/api/users/reset_password_confirm/",
+        body,
+        config
+      );
+      dispatch({
+        type: PASSWORD_RESET_CONFIRM_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PASSWORD_RESET_CONFIRM_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
+
 /* ACTION CREATOR USED IN USER LOGOUT IN LoginScreen COMPONENT & HEADER */
 export const logout = () => (dispatch) => {
   /* REMOVE USER INFO FORM LOCAL STORAGE */
@@ -105,7 +169,7 @@ export const register = (name, email, password) => async (dispatch) => {
         "Content-type": "application/json",
       },
     };
-
+    
     const { data } = await axios.post(
       "/api/users/register/",
       { name: name, email: email, password: password },

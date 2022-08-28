@@ -1,37 +1,23 @@
 # Django Import
 from email import message
-from email.mime import base
-from multiprocessing import context
-from re import template
-from unicodedata import name
 from django.core.exceptions import RequestDataTooBig
 from django.shortcuts import render
 from datetime import datetime
-
+from django.conf import settings
+from django.core.mail import send_mail
 from rest_framework import status
-
-
-from rest_framework.response import Response
 
 # Rest Framework Import
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
-from backend.settings import EMAIL_HOST_USER
 
 
 # Local Import
 from base.products import products
 from base.models import *
-from base.serializers import ProductSerializer, OrderSerializer
-
-# checkout
-from django.core.mail import EmailMessage
-from django.conf import settings
-from django.template.loader import render_to_string
-
-from django.core.mail import send_mail
+from base.serializers import OrderItemSerializer, ProductSerializer, OrderSerializer, ShippingAddressSerializer
 
 
 # views start from here
@@ -126,21 +112,40 @@ def getOrderById(request, pk):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def updateOrderToPaid(request,pk):
+def updateOrderToPaid(request, pk):
     order = Order.objects.get(_id=pk)
+    current_user = request.user
     order.isPaid = True
     order.paidAt = datetime.now()
+    mail = "Thanks for paid for order"
+    msg = 'Total price ' + str(order.totalPrice)
+    send_mail(
+        mail,
+        msg,
+        settings.EMAIL_HOST_USER,
+        [current_user],
+        fail_silently=False,
+    )
     order.save()
     return Response('Order was paid')
 
-    
 
- 
-@api_view(['PUT'])
+@api_view(['POST'])
 @permission_classes([IsAdminUser])
 def updateOrderToDelivered(request, pk):
     order = Order.objects.get(_id=pk)
+    current_user = request.data
+    address = ShippingAddressSerializer
     order.isDeliver = True
     order.deliveredAt = datetime.now()
+    mail = "Thanks for register"
+    msg = "Total price " + address
     order.save()
+    send_mail(
+        mail,
+        msg,
+        settings.EMAIL_HOST_USER,
+        [current_user],
+        fail_silently=False,
+    )
     return Response('Order was Delivered')

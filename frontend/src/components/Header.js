@@ -1,8 +1,8 @@
 import React from "react";
-
-
+import "./style.css";
+import { Link } from "react-router-dom";
 /* REACT BOOTSTRAP */
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, Container, NavDropdown, Card } from "react-bootstrap";
 
 /* REACT ROUTER BOOTSTRAP */
 import { LinkContainer } from "react-router-bootstrap";
@@ -18,8 +18,7 @@ import SearchBox from "./SearchBox";
 
 import logo from "../logo.png";
 
-
-function Header() {
+function Header(userImg) {
   /* PULLING A PART OF STATE FROM THE ACTUAL STATE IN THE REDUX STORE */
   const userLogin = useSelector((state) => state.userLogin);
 
@@ -38,10 +37,7 @@ function Header() {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <img src={logo} alt="E-commerce" style={{ width:"200 px" ,height:"100 px"  }}/>
-   
-    
-    
+              <img src={logo} alt="Ecommerce" className="logo" />
             </Navbar.Brand>
           </LinkContainer>
 
@@ -63,6 +59,11 @@ function Header() {
 
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id="username">
+                  <LinkContainer to="/admin/imglist">
+                    <Link to={`/get_user/${userImg._id}`}>
+                      <Card.Img src={userImg.image} />
+                    </Link>
+                  </LinkContainer>
                   <LinkContainer to="/profile">
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>
@@ -81,6 +82,12 @@ function Header() {
 
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title="Admin" id="adminmenu">
+                  <LinkContainer to="/admin/imglist">
+                    <Link to={`/get_user/${userImg._id}`}>
+                      <Card.Img src={userImg.image} />
+                    </Link>
+                  </LinkContainer>
+
                   <LinkContainer to="/admin/userlist">
                     <NavDropdown.Item>Users</NavDropdown.Item>
                   </LinkContainer>

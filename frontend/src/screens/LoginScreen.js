@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import ForgetPassword from "./ForgetPassword";
 /* REACT ROUTER */
 import { Link } from "react-router-dom";
 
@@ -86,6 +86,15 @@ function LoginScreen({ location, history }) {
           New Customer ?{" "}
           <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
             Register
+          </Link>
+        </Col>
+      </Row>
+
+      <Row className="py-3">
+        <Col>
+          {" "}
+          <Link to={redirect ? `/forgetPassword?redirect=${ForgetPassword}` : "/forgetPassword"}>
+          <Button variant="link">Forgotten password?</Button>
           </Link>
         </Col>
       </Row>

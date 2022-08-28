@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,10 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-i-b2o_4@ru#jr_y)vbhdjng$607jjufk4i8b+*wrk0p&!ae%-e'
 
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','Ecommerce.com']
+
 
 
 # Application definition
@@ -42,15 +47,15 @@ INSTALLED_APPS = [
     #3rd party apps 
     'rest_framework',
     'corsheaders',
+    'django_rest_passwordreset',
+    
 ]
 
 # Simple JWT 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-      
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
-   
 }
 
 
@@ -59,7 +64,7 @@ from datetime import timedelta
 ...
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -153,12 +158,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-#TIME_ZONE = 'Africa/Egypt'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -179,16 +185,16 @@ STATICFILES_DIRS = [
     BASE_DIR/'static',
     BASE_DIR/'frontend/build/static', 
 ]
-# SMTP configuration
 
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT='587'
-EMAIL_USE_TLS= True
-DEFAULT_FROM_EMAIL = 'nadamohamed971990@gmail.com'
-EMAIL_HOST_USER='nadamohamed971990@gmail.com'
-EMAIL_HOST_PASSWORD='wbkjhmjxzvjymorr'
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django_ses.SESBackend'
+AWS_ACCESS_KEY_ID = 'YOUR-ACCESS-KEY-ID'
+AWS_SECRET_ACCESS_KEY = 'YOUR-SECRET-ACCESS-KEY'
+AWS_SES_REGION_NAME = 'REGION-NAME' #(ex: us-east-2)
+AWS_SES_REGION_ENDPOINT ='REGION-ENDPOINT'
 
 # Bottom of the file
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -197,14 +203,12 @@ EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'test@gmail.com'
 EMAIL_HOST_USER = 'marinamagdymaher05@gmail.com'
-EMAIL_HOST_PASSWORD = 'fsencgdkrizwgzoi'
-
-
-
-
-CORS_ALLOW_ALL_ORIGINS = True
+EMAIL_HOST_PASSWORD = 'fsencgdkrizwgzoi' 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
