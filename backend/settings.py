@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from .jazzmine import JAZZMIN_SETTINGS
 from datetime import timedelta
+from pickle import TRUE
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +29,7 @@ SECRET_KEY = 'django-insecure-i-b2o_4@ru#jr_y)vbhdjng$607jjufk4i8b+*wrk0p&!ae%-e
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = TRUE
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','Ecommerce.com']
 
@@ -36,6 +38,7 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1','Ecommerce.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_rest_passwordreset',
+    
     
 ]
 
@@ -210,5 +214,4 @@ EMAIL_HOST_PASSWORD = 'fsencgdkrizwgzoi'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
+JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
