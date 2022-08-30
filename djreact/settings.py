@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
+
 from .jazzmine import JAZZMIN_SETTINGS
 from datetime import timedelta
 from pickle import TRUE
