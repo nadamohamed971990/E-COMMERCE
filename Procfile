@@ -1,1 +1,2 @@
-web: gunicorn backend.wsgi --log-file -
+realese:python manage.py migrate
+web: gunicorn djreact.wsgi --log-file -
