@@ -73,6 +73,7 @@ def getRoutes(request):
         '/api/users/register',
         '/api/users/login',
         '/api/users/profile',
+        
         "/api/users/password_reset/",
     ]
     return Response(routes)

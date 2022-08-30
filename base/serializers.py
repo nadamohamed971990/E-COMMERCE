@@ -37,6 +37,19 @@ class UserSerializerWithToken(UserSerializer):
         return str(token.access_token)
 
 
+
+class UserProfileSerializer(serializers.ModelSerializer):
+
+    user = serializers.ReadOnlyField(source='user.username')
+    user_id = serializers.ReadOnlyField(source='user.id')
+    image = serializers.ImageField(required=False)
+
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
+
+
+
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
@@ -44,10 +57,10 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 
-class AddImgSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AddImg
-        fields = '__all__'
+# class AddImgSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = AddImg
+#         fields = '__all__'
 
 
 
