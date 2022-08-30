@@ -135,16 +135,7 @@ function OrderScreen({ history, match }) {
                 {order.shippingAddress.country}
               </p>
 
-              {order.isDeliver ? (
-                <Message variant="success">
-                  Delivered on{" "}
-                  {order.deliveredAt
-                    ? order.deliveredAt.substring(0, 10)
-                    : null}
-                </Message>
-              ) : (
-                <Message variant="warning">Not Delivered</Message>
-              )}
+              
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -256,19 +247,7 @@ function OrderScreen({ history, match }) {
               )}
             </ListGroup>
 
-            {loadingDeliver && <Loader />}
-
-            {userInfo && userInfo.isAdmin && order.isPaid && !order.isDeliver && (
-              <ListGroup.Item>
-                <Button
-                  type="button"
-                  className="btn w-100"
-                  onClick={deliverHandler}
-                >
-                  Mark As Delivered
-                </Button>
-              </ListGroup.Item>
-            )}
+            
           </Card>
         </Col>
       </Row>
