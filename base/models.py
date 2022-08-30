@@ -8,16 +8,25 @@ from django.conf import settings
 from django.dispatch import receiver
 from django.urls import reverse
 from django.core.mail import send_mail  
-from django_rest_passwordreset.signals import reset_password_token_created
+# from django_rest_passwordreset.signals import reset_password_token_created
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 # Create your models here.
 
-class AddImg(models.Model):
-    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
-    image = models.ImageField(null=True,blank = True,default = "/images/placeholder.png",upload_to="images/")
+# class AddImg(models.Model):
+#     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+#     image = models.ImageField(null=True,blank = True,default = "/images/placeholder.png",upload_to="images/")
 
+def upload_to(instance, filename):
+    return 'images/{filename}'.format(filename=filename)
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=upload_to, blank=True, null=True) # or whatever
+
+    def __str__(self):
+        return self.user.email
 
 class Product(models.Model):
     user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
@@ -103,18 +112,18 @@ class ShippingAddress(models.Model):
 
 
 
-@receiver(reset_password_token_created)
-def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+# @receiver(reset_password_token_created)
+# def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
 
-    email_plaintext_message = "{}?token={}".format(reverse('password_reset:reset-password-request'), reset_password_token.key)
+#     email_plaintext_message = "{}?token={}".format(reverse('password_reset:reset-password-request'), reset_password_token.key)
 
-    send_mail(
-        # title:
-        "Password Reset for {title}".format(title="Some website title"),
-        # message:
-        email_plaintext_message,
-        # from:
-        settings.EMAIL_HOST_USER,
-        # to:
-        [reset_password_token.user.email]
-    )
+#     send_mail(
+#         # title:
+#         "Password Reset for {title}".format(title="Some website title"),
+#         # message:
+#         email_plaintext_message,
+#         # from:
+#         settings.EMAIL_HOST_USER,
+#         # to:
+#         [reset_password_token.user.email]
+#     )
