@@ -188,7 +188,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR ,"media")
 STATICFILES_DIRS = [
     BASE_DIR/'static',
     BASE_DIR/'/build/static', 
+    
 ]
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage' 
+
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
