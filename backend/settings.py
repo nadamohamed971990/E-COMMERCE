@@ -190,7 +190,7 @@ STATICFILES_DIRS = [
     BASE_DIR/'/build/static', 
     
 ]
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage' 
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage' 
 
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
