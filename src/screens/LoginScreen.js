@@ -90,14 +90,14 @@ function LoginScreen({ location, history }) {
         </Col>
       </Row>
 
-      <Row className="py-3">
+      {/* <Row className="py-3">
         <Col>
           {" "}
           <Link to={redirect ? `/forgetPassword?redirect=${ForgetPassword}` : "/forgetPassword"}>
           <Button variant="link">Forgotten password?</Button>
           </Link>
         </Col>
-      </Row>
+      </Row> */}
     </FormContainer>
   );
 }
