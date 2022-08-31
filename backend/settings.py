@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-from decouple import config
-
 from .jazzmine import JAZZMIN_SETTINGS
 from datetime import timedelta
 from pickle import TRUE
@@ -31,9 +29,9 @@ SECRET_KEY = 'django-insecure-i-b2o_4@ru#jr_y)vbhdjng$607jjufk4i8b+*wrk0p&!ae%-e
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = TRUE
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','ecommercefinalproject20.herokuapp.com']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','Ecommerce.com']
 
 
 
@@ -101,7 +99,7 @@ SIMPLE_JWT = {
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -186,12 +184,10 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR ,"media")
-#STATICFILES_STORAGE ='whitenose.django.GzipmanifestStaticFilesStorage'
 
 STATICFILES_DIRS = [
     BASE_DIR/'static',
     BASE_DIR/'frontend/build/static', 
-    
 ]
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
