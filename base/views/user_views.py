@@ -17,6 +17,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework import permissions
+from rest_framework import viewsets
 
 # Rest Framework JWT
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -24,7 +27,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 # Local Import
 from base.models import *
-from base.serializers import UserSerializer, UserSerializerWithToken, AddImgSerializer
+from base.serializers import UserSerializer, UserSerializerWithToken, AddImgSerializer, UserProfileSerializer
 
 
 
@@ -63,6 +66,17 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
+class UserProfileViewSet(viewsets.ModelViewSet):
+    queryset = UserProfile.objects.order_by('id')
+    serializer_class = UserProfileSerializer
+    parser_classes = (MultiPartParser, FormParser)
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
 # SHOP API
 @api_view(['GET'])
 def getRoutes(request):
@@ -73,6 +87,7 @@ def getRoutes(request):
         '/api/users/register',
         '/api/users/login',
         '/api/users/profile',
+        '/api/users/upload',
         "/api/users/password_reset/",
     ]
     return Response(routes)
@@ -103,7 +118,15 @@ def registerUser(request):
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
-
+# Upload Image
+@api_view(['POST'])
+def uploadImage(request):
+    data = request.data
+    _id = data['_id']
+    user = User.objects.get(_id=_id)
+    user.image = request.FILES.get('image')
+    user.save()
+    return Response("Image was uploaded")
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
