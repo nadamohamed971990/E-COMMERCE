@@ -1,3 +1,3 @@
-realese:python manage.py migrate
-release:python manage.py migrate
+
 web:gunicorn backend.wsgi --log-file -
+ heroku ps:scale web=1
