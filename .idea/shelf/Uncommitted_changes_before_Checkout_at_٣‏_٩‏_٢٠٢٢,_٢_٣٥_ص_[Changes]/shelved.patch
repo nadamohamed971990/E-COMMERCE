@@ -1,0 +1,31 @@
+Index: backend/urls.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"\"\"backend URL Configuration\n\nThe `urlpatterns` list routes URLs to views. For more information please see:\n    https://docs.djangoproject.com/en/3.2/topics/http/urls/\nExamples:\nFunction views\n    1. Add an import:  from my_app import views\n    2. Add a URL to urlpatterns:  path('', views.home, name='home')\nClass-based views\n    1. Add an import:  from other_app.views import Home\n    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')\nIncluding another URLconf\n    1. Import the include() function: from django.urls import include, path\n    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\n\"\"\"\nfrom os import stat\nfrom django.contrib import admin\nfrom django.urls import path,include\nfrom django.conf import settings\nfrom django.conf.urls.static import static\nfrom django.views.generic import TemplateView\nfrom django.contrib.auth import views as auth_views\n\nurlpatterns = [\n    path('admin/', admin.site.urls),\n    path('api/',include('base.urls')),\n    path('',TemplateView.as_view(template_name='index.html')),\n    path('api/products/',include('base.urls.product_urls')),\n    path('api/users/',include('base.urls.user_urls')),\n    path('api/orders/',include('base.urls.order_urls')),\n    \n    path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),\n    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),\n    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),\n    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),      \n    path('accounts/', include('django.contrib.auth.urls')),\n    \n]\n\nurlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)\nurlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)\n\n\n\n\n    
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/backend/urls.py b/backend/urls.py
+--- a/backend/urls.py	(revision 1ae885d76496ac505d949f486cbc53e85776434b)
++++ b/backend/urls.py	(date 1662162755903)
+@@ -23,8 +23,8 @@
+ 
+ urlpatterns = [
+     path('admin/', admin.site.urls),
+-    path('api/',include('base.urls')),
+-    path('',TemplateView.as_view(template_name='index.html')),
++    # path('api/',include('base.urls')),
++    # path('',TemplateView.as_view(template_name='index.html')),
+     path('api/products/',include('base.urls.product_urls')),
+     path('api/users/',include('base.urls.user_urls')),
+     path('api/orders/',include('base.urls.order_urls')),
+@@ -33,8 +33,7 @@
+     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),      
+-    path('accounts/', include('django.contrib.auth.urls')),
+-    
++    # path('accounts/', include('django.contrib.auth.urls')),
+ ]
+ 
+ urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
