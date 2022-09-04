@@ -27,7 +27,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 # Local Import
 from base.models import *
-from base.serializers import UserSerializer, UserSerializerWithToken, AddImgSerializer, UserProfileSerializer
+from base.serializers import UserSerializer, UserSerializerWithToken, UserProfileSerializer
 
 
 
