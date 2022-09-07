@@ -38,8 +38,7 @@ function Header() {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <img src={logo} alt="E-commerce" style={{ width:"200 px" ,height:"100 px"  }}/>
-   
+              <img src={logo} alt="E-commerce" className="logo"/>
     
     
             </Navbar.Brand>
