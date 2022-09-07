@@ -117,8 +117,14 @@ def updateOrderToPaid(request, pk):
     current_user = request.user
     order.isPaid = True
     order.paidAt = datetime.now()
+    order.save()
+    serializer = OrderSerializer(order)
+    # print (serializer)
+    print(serializer.data)
     mail = "Thanks for paid for order"
-    msg = 'Total price ' + str(order.totalPrice)
+    # str(order.totalPrice)
+    msg = f'send code {serializer.data}' 
+    print(msg)
     send_mail(
         mail,
         msg,
@@ -126,26 +132,14 @@ def updateOrderToPaid(request, pk):
         [current_user],
         fail_silently=False,
     )
-    order.save()
     return Response('Order was paid')
 
 
-@api_view(['POST'])
+@api_view(['PUT'])
 @permission_classes([IsAdminUser])
 def updateOrderToDelivered(request, pk):
     order = Order.objects.get(_id=pk)
-    current_user = request.data
-    address = ShippingAddressSerializer
     order.isDeliver = True
     order.deliveredAt = datetime.now()
-    mail = "Thanks for register"
-    msg = "Total price " + address
     order.save()
-    send_mail(
-        mail,
-        msg,
-        settings.EMAIL_HOST_USER,
-        [current_user],
-        fail_silently=False,
-    )
     return Response('Order was Delivered')
