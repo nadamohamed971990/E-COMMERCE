@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./logo.css"
+
 
 /* REACT BOOTSTRAP */
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
